@@ -26,8 +26,9 @@ def hello_world():
     for movie in random_person['known_for']:
         if movie['popularity'] < minor_rating:
             worst_movie = movie
+            minor_rating = movie['popularity']
 
-    data = {'text':f"La pelicula menos popular de {random_person['name']} es {worst_movie['title']} y trabajo en el departamento de {random_person['known_for_department']}"}
+    data = {'text':f"La pelicula menos popular de {random_person['name']} es {worst_movie['title']} con una valoracion de {minor_rating} y trabajo en el departamento de {random_person['known_for_department']}"}
     response = app.response_class(
         response=json.dumps(data),
         status=200,
