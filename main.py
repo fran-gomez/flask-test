@@ -27,3 +27,7 @@ def hello_world():
             worst_movie = movie
 
     return f"La pelicula menos popular de {random_person['name']} es {worst_movie['title']} y trabajo en el departamento de {random_person['known_for_department']}"
+
+
+if __name__ == "__main__":
+    app.run(debug=True)
