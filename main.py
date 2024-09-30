@@ -1,5 +1,6 @@
 import requests
 import random
+import json
 
 from flask import Flask
 app = Flask(__name__)
@@ -17,7 +18,7 @@ def hello_world():
 
     json_response = response.json()
     results_count = len(json_response['results'])
-    random_index = random.randint(0, results_count)
+    random_index = random.randint(0, results_count-1)
     random_person = json_response['results'][random_index]
 
     minor_rating = 9999999
@@ -26,8 +27,14 @@ def hello_world():
         if movie['popularity'] < minor_rating:
             worst_movie = movie
 
-    return f"La pelicula menos popular de {random_person['name']} es {worst_movie['title']} y trabajo en el departamento de {random_person['known_for_department']}"
+    data = {'text':f"La pelicula menos popular de {random_person['name']} es {worst_movie['title']} y trabajo en el departamento de {random_person['known_for_department']}"}
+    response = app.response_class(
+        response=json.dumps(data),
+        status=200,
+        mimetype='application/json'
+    )
+    return response
 
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(debug=True, port=80)
